@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<!-- 更换国内可访问CDN节点 -->
+<script src="https://fastly.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <title>整活小店</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
@@ -211,15 +212,7 @@ body{background:#f5f5f5;padding:12px;}
 </style>
 </head>
 <body>
-<audio src="qinghua.mp3" loop hidden id="bgMusic">
-<script>
-window.addEventListener('click', function playAudio(){
-    const music = document.getElementById('bgMusic');
-    music.play();
-    window.removeEventListener('click', playAudio);
-})
-</script>
-
+<!-- 移除本地qinghua.mp3音频，避免线上404占用空间 -->
 <div class="top-nav">
     <div class="nav-title">LV小店</div>
     <div class="nav-info">联系商家 | 订单查询</div>
@@ -229,31 +222,28 @@ window.addEventListener('click', function playAudio(){
     <p>仅朋友整活娱乐，无真实交易</p>
 </div>
 <div class="goods-wrap">
-    <!--商品1–>
+    <!--商品1-->
     <div class="good-item">
         <div class="good-name">LV8小时</div>
-        <div class="good-desc">上号器地址：<br>https://yshanghaoqi.netlify.app<br>禁用器地址：
-https://yyy748721.github.io</div>
+        <div class="good-desc">上号器地址：<br>https://yshanghaoqi.netlify.app<br>禁用器地址：https://yyy748721.github.io</div>
         <div class="good-bottom">
             <div class="price">¥25.5</div>
             <button class="buy-btn">立即购买</button>
         </div>
     </div>
-    <!--新增商品2–>
+    <!--新增商品2-->
     <div class="good-item">
         <div class="good-name">LV24小时</div>
-        <div class="good-desc">上号器地址：<br>https://yshanghaoqi.netlify.app<br>禁用器地址：
-https://yyy748721.github.io</div>
+        <div class="good-desc">上号器地址：<br>https://yshanghaoqi.netlify.app<br>禁用器地址：https://yyy748721.github.io</div>
         <div class="good-bottom">
             <div class="price">¥65</div>
             <button class="buy-btn">立即购买</button>
         </div>
     </div>
-    <!--新增商品3–>
+    <!--新增商品3-->
     <div class="good-item">
         <div class="good-name">LV周卡</div>
-        <div class="good-desc">上号器地址：<br>https://yshanghaoqi.netlify.app<br>禁用器地址：
-https://yyy748721.github.io</div>
+        <div class="good-desc">上号器地址：<br>https://yshanghaoqi.netlify.app<br>禁用器地址：https://yyy748721.github.io</div>
         <div class="good-bottom">
             <div class="price">¥168</div>
             <button class="buy-btn">立即购买</button>
@@ -316,7 +306,6 @@ const SERVICE_ID = "service_w7ekee8";
 const TEMPLATE_ID = "template_jzz776q";
 const PUBLIC_KEY = "vVDAa2c-fylpqgn4";
 emailjs.init(PUBLIC_KEY);
-
 const buyBtns = document.querySelectorAll('.buy-btn');
 const formMask = document.getElementById('formMask');
 const popMask = document.getElementById('popMask');
@@ -353,13 +342,13 @@ knownBtn.onclick = async ()=>{
         popMask.style.display = "flex";
         msgInput.value = "";
     }catch(err){
-        alert("提交失败，网络异常");
+        alert("提交失败，网络异常，切换流量重试");
     }
     submitBtn.disabled = false;
     loading.style.display = "none";
 }
 
-// 关闭中奖弹窗
+// 关闭弹窗事件
 closePop.onclick = ()=> popMask.style.display = 'none';
 popMask.onclick = e=>{if(e.target === popMask) popMask.style.display = 'none'};
 formMask.onclick = e=>{if(e.target === formMask) formMask.style.display = 'none'};
