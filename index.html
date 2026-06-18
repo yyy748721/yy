@@ -3,13 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<!-- 更换国内可访问CDN节点 -->
-<script src="https://fastly.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <title>整活小店</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
 body{background:#f5f5f5;padding:12px;}
-/*顶部导航*/
 .top-nav{
     background:#222;
     color:#fff;
@@ -22,7 +19,6 @@ body{background:#f5f5f5;padding:12px;}
 }
 .nav-title{font-size:18px;font-weight:bold;}
 .nav-info{font-size:13px;opacity:0.8;}
-/*公告栏*/
 .notice{
     background:#fff;
     padding:12px 15px;
@@ -32,7 +28,6 @@ body{background:#f5f5f5;padding:12px;}
 }
 .notice h4{color:#f53f3f;margin-bottom:6px;}
 .notice p{font-size:14px;color:#444;line-height:1.6}
-/*商品列表*/
 .goods-wrap{display:grid;grid-template-columns:1fr;gap:15px;}
 .good-item{
     background:#fff;
@@ -63,7 +58,6 @@ body{background:#f5f5f5;padding:12px;}
     font-size:12px;
     color:#888;
 }
-/*悬浮按钮通用样式*/
 .float-base{
     position:fixed;
     left:15px;
@@ -76,17 +70,14 @@ body{background:#f5f5f5;padding:12px;}
     cursor:pointer;
     box-shadow:0 2px 8px rgba(0,0,0,0.2);
 }
-/*禁用器悬浮按钮（在上）*/
 .float-disable{
     background:#ff4444;
     bottom:80px;
 }
-/*上号器悬浮按钮（在下）*/
 .float-btn{
     background:#00bb22;
     bottom:30px;
 }
-/*下单弹窗*/
 .form-mask{
     position:fixed;
     inset:0;
@@ -136,7 +127,6 @@ body{background:#f5f5f5;padding:12px;}
     margin:8px 0;
     display:none;
 }
-/*中奖弹窗*/
 .pop-mask{
     position:fixed;
     inset:0;
@@ -175,7 +165,6 @@ body{background:#f5f5f5;padding:12px;}
     font-size:14px;
     cursor:pointer;
 }
-/*免责确认弹窗*/
 .warn-mask{
     position:fixed;
     inset:0;
@@ -212,7 +201,6 @@ body{background:#f5f5f5;padding:12px;}
 </style>
 </head>
 <body>
-<!-- 移除本地qinghua.mp3音频，避免线上404占用空间 -->
 <div class="top-nav">
     <div class="nav-title">LV小店</div>
     <div class="nav-info">联系商家 | 订单查询</div>
@@ -222,7 +210,6 @@ body{background:#f5f5f5;padding:12px;}
     <p>仅朋友整活娱乐，无真实交易</p>
 </div>
 <div class="goods-wrap">
-    <!--商品1-->
     <div class="good-item">
         <div class="good-name">LV8小时</div>
         <div class="good-desc">上号器地址：<br>https://yshanghaoqi.netlify.app<br>禁用器地址：https://yyy748721.github.io</div>
@@ -231,7 +218,6 @@ body{background:#f5f5f5;padding:12px;}
             <button class="buy-btn">立即购买</button>
         </div>
     </div>
-    <!--新增商品2-->
     <div class="good-item">
         <div class="good-name">LV24小时</div>
         <div class="good-desc">上号器地址：<br>https://yshanghaoqi.netlify.app<br>禁用器地址：https://yyy748721.github.io</div>
@@ -240,7 +226,6 @@ body{background:#f5f5f5;padding:12px;}
             <button class="buy-btn">立即购买</button>
         </div>
     </div>
-    <!--新增商品3-->
     <div class="good-item">
         <div class="good-name">LV周卡</div>
         <div class="good-desc">上号器地址：<br>https://yshanghaoqi.netlify.app<br>禁用器地址：https://yyy748721.github.io</div>
@@ -253,12 +238,8 @@ body{background:#f5f5f5;padding:12px;}
 <div class="footer">
     仅供好友娱乐整活使用
 </div>
-
-<!-- 悬浮按钮：上方禁用器，下方上号器 -->
 <button class="float-base float-disable" onclick="window.open('https://yyy748721.github.io','_blank')">点我进入禁用器</button>
 <button class="float-base float-btn" onclick="window.open('https://yshanghaoqi.netlify.app','_blank')">点我进入上号器</button>
-
-<!--下单填写弹窗 无支付宝-->
 <div class="form-mask" id="formMask">
     <div class="form-box">
         <div class="form-title">LV套餐</div>
@@ -282,16 +263,12 @@ body{background:#f5f5f5;padding:12px;}
         <button class="submit-pay" id="submitBtn">提交留言并购买</button>
     </div>
 </div>
-
-<!--免责确认弹窗（仅供娱乐）-->
 <div class="warn-mask" id="warnMask">
     <div class="warn-box">
         <div class="warn-text">本页面仅供好友娱乐整活，不存在真实商品与交易，请知悉！</div>
         <button class="known-btn" id="knownBtn">我已知晓</button>
     </div>
 </div>
-
-<!--中奖图片弹窗-->
 <div class="pop-mask" id="popMask">
     <div class="pop-box">
         <div class="pop-tip">你已中奖</div>
@@ -300,59 +277,78 @@ body{background:#f5f5f5;padding:12px;}
     </div>
 </div>
 
+<!-- 音频模块：播放周传雄《青花》 -->
+<audio id="bgMusic" loop hidden preload="auto">
+    <!-- 方案A：本地qinghua.mp3（推荐，html与mp3放同一文件夹） -->
+    <source src="qinghua.mp3" type="audio/mpeg">
+    <!-- 方案B：线上备用无版权拦截音频（线上部署用，注释上面一行，取消下面注释） -->
+    <!-- <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"> -->
+    您的浏览器不支持音频播放
+
 <script>
-// 已填入你的真实密钥
-const SERVICE_ID = "service_w7ekee8";
-const TEMPLATE_ID = "template_jzz776q";
-const PUBLIC_KEY = "vVDAa2c-fylpqgn4";
-emailjs.init(PUBLIC_KEY);
-const buyBtns = document.querySelectorAll('.buy-btn');
-const formMask = document.getElementById('formMask');
-const popMask = document.getElementById('popMask');
-const warnMask = document.getElementById('warnMask');
-const submitBtn = document.getElementById('submitBtn');
-const closePop = document.querySelector('.close-pop');
-const knownBtn = document.getElementById('knownBtn');
-const msgInput = document.getElementById('msgInput');
-const loading = document.getElementById('loading');
-
-// 打开下单弹窗
-buyBtns.forEach(btn=>{
-    btn.onclick = ()=> formMask.style.display = 'flex';
+const audio = document.getElementById('bgMusic');
+document.body.addEventListener('click', function playAudio() {
+    audio.play().catch(e=>console.log("需要点击页面触发播放"));
+    document.body.removeEventListener('click', playAudio);
 })
+</script>
 
-// 点击提交，先弹出免责弹窗
-submitBtn.onclick = ()=>{
-    let text = msgInput.value.trim();
-    if(!text){
-        alert("请输入留言");
-        return;
+<!-- 延后加载EmailJS，不阻塞页面、音频 -->
+<script>
+window.addEventListener('load',()=>{
+  let s=document.createElement('script');
+  s.src="https://fastly.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js";
+  s.onload=()=>{
+    const SERVICE_ID = "service_w7ekee8";
+    const TEMPLATE_ID = "template_jzz776q";
+    const PUBLIC_KEY = "vVDAa2c-fylpqgn4";
+    emailjs.init(PUBLIC_KEY);
+    const buyBtns = document.querySelectorAll('.buy-btn');
+    const formMask = document.getElementById('formMask');
+    const popMask = document.getElementById('popMask');
+    const warnMask = document.getElementById('warnMask');
+    const submitBtn = document.getElementById('submitBtn');
+    const closePop = document.querySelector('.close-pop');
+    const knownBtn = document.getElementById('knownBtn');
+    const msgInput = document.getElementById('msgInput');
+    const loading = document.getElementById('loading');
+
+    buyBtns.forEach(btn=>{
+        btn.onclick = ()=> formMask.style.display = 'flex';
+    })
+
+    submitBtn.onclick = ()=>{
+        let text = msgInput.value.trim();
+        if(!text){
+            alert("请输入留言");
+            return;
+        }
+        warnMask.style.display = 'flex';
     }
-    warnMask.style.display = 'flex';
-}
 
-// 点击我已知晓，执行发邮件+弹出中奖
-knownBtn.onclick = async ()=>{
-    warnMask.style.display = 'none';
-    submitBtn.disabled = true;
-    loading.style.display = "block";
-    try{
-        await emailjs.send(SERVICE_ID, TEMPLATE_ID, {message:msgInput.value.trim()});
-        formMask.style.display = 'none';
-        popMask.style.display = "flex";
-        msgInput.value = "";
-    }catch(err){
-        alert("提交失败，网络异常，切换流量重试");
+    knownBtn.onclick = async ()=>{
+        warnMask.style.display = 'none';
+        submitBtn.disabled = true;
+        loading.style.display = "block";
+        try{
+            await emailjs.send(SERVICE_ID, {message:msgInput.value.trim()});
+            formMask.style.display = 'none';
+            popMask.style.display = "flex";
+            msgInput.value = "";
+        }catch(err){
+            alert("提交失败，切换流量重试");
+        }
+        submitBtn.disabled = false;
+        loading.style.display = "none";
     }
-    submitBtn.disabled = false;
-    loading.style.display = "none";
-}
 
-// 关闭弹窗事件
-closePop.onclick = ()=> popMask.style.display = 'none';
-popMask.onclick = e=>{if(e.target === popMask) popMask.style.display = 'none'};
-formMask.onclick = e=>{if(e.target === formMask) formMask.style.display = 'none'};
-warnMask.onclick = e=>{if(e.target === warnMask) warnMask.style.display = 'none'};
+    closePop.onclick = ()=> popMask.style.display = 'none';
+    popMask.onclick = e=>{if(e.target === popMask) popMask.style.display = 'none'};
+    formMask.onclick = e=>{if(e.target === formMask) formMask.style.display = 'none'};
+    warnMask.onclick = e=>{if(e.target === warnMask) warnMask.style.display = 'none'};
+  }
+  document.body.appendChild(s);
+})
 </script>
 </body>
 </html>
