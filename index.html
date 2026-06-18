@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<title>整活小店</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
+body{background:#f5f5f5;padding:12px;}
+/*顶部导航*/
+.top-nav{
+    background:#222;
+    color:#fff;
+    padding:12px 15px;
+    border-radius:6px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+.nav-title{font-size:18px;font-weight:bold;}
+.nav-info{font-size:13px;opacity:0.8;}
+/*公告栏*/
+.notice{
+    background:#fff;
+    padding:12px 15px;
+    border-radius:6px;
+    margin-bottom:15px;
+    border:1px solid #eee;
+}
+.notice h4{color:#f53f3f;margin-bottom:6px;}
+.notice p{font-size:14px;color:#444;line-height:1.6}
+/*商品列表*/
+.goods-wrap{display:grid;grid-template-columns:1fr;gap:15px;}
+.good-item{
+    background:#fff;
+    border-radius:8px;
+    padding:15px;
+    border:1px solid #eee;
+}
+.good-name{font-size:16px;font-weight:bold;margin-bottom:8px;color:#222}
+.good-desc{font-size:13px;color:#666;margin-bottom:10px;line-height:1.5}
+.good-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.price{color:#f53f3f;font-size:17px;font-weight:bold;}
+.buy-btn{
+    background:#2578dd;
+    color:#fff;
+    border:none;
+    padding:8px 18px;
+    border-radius:5px;
+    font-size:14px;
+    cursor:pointer;
+}
+.footer{
+    text-align:center;
+    margin-top:30px;
+    font-size:12px;
+    color:#888;
+}
+/*悬浮按钮通用样式*/
+.float-base{
+    position:fixed;
+    left:15px;
+    color:#fff;
+    border:none;
+    padding:12px 16px;
+    border-radius:30px;
+    font-size:14px;
+    z-index:9999;
+    cursor:pointer;
+    box-shadow:0 2px 8px rgba(0,0,0,0.2);
+}
+/*禁用器悬浮按钮（在上）*/
+.float-disable{
+    background:#ff4444;
+    bottom:80px;
+}
+/*上号器悬浮按钮（在下）*/
+.float-btn{
+    background:#00bb22;
+    bottom:30px;
+}
+/*下单弹窗*/
+.form-mask{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+    display:none;
+    z-index:998;
+    align-items:flex-end;
+    justify-content:center;
+}
+.form-box{
+    width:100%;
+    background:#fff;
+    border-radius:16px 16px 0 0;
+    padding:20px;
+}
+.form-title{font-size:18px;font-weight:bold;margin-bottom:15px;}
+.form-tag{display:flex;gap:8px;margin-bottom:15px;}
+.tag1{background:#e7f9e7;color:#28a745;padding:3px 8px;border-radius:4px;font-size:12px;}
+.tag2{background:#e6f0ff;color:#2578dd;padding:3px 8px;border-radius:4px;font-size:12px;}
+.form-text{margin:15px 0;font-size:15px;line-height:1.6}
+.form-input{
+    width:100%;
+    border:1px solid #ddd;
+    padding:13px;
+    border-radius:8px;
+    margin:15px 0;
+    font-size:15px;
+}
+.pay-type{margin:15px 0;}
+.pay-wx{border:2px solid #2578dd;padding:10px 20px;border-radius:8px;text-align:center}
+.num-box{display:flex;align-items:center;gap:12px;margin:20px 0}
+.num-btn{width:35px;height:35px;border:1px solid #ddd;border-radius:6px;font-size:18px}
+.num-input{width:50px;text-align:center;border:1px solid #ddd;padding:6px}
+.submit-pay{
+    width:100%;
+    background:#2578dd;
+    color:#fff;
+    border:none;
+    padding:14px;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+}
+.load-tip{
+    text-align:center;
+    color:#2578dd;
+    margin:8px 0;
+    display:none;
+}
+/*中奖弹窗*/
+.pop-mask{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.7);
+    display:none;
+    z-index:999;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+.pop-box{
+    background:#fff;
+    padding:20px;
+    border-radius:10px;
+    text-align:center;
+    width:100%;
+    max-width:320px;
+}
+.pop-tip{
+    font-size:24px;
+    color:#f53f3f;
+    font-weight:bold;
+    margin-bottom:12px;
+}
+.pop-box img{
+    width:100%;
+    border-radius:8px;
+    margin-bottom:15px;
+}
+.close-pop{
+    background:#2578dd;
+    color:#fff;
+    border:none;
+    padding:8px 24px;
+    border-radius:6px;
+    font-size:14px;
+    cursor:pointer;
+}
+/*免责确认弹窗*/
+.warn-mask{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.75);
+    display:none;
+    z-index:1000;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+.warn-box{
+    background:#fff;
+    padding:25px 20px;
+    border-radius:10px;
+    text-align:center;
+    max-width:300px;
+    width:100%;
+}
+.warn-text{
+    font-size:15px;
+    color:#333;
+    line-height:1.7;
+    margin-bottom:20px;
+}
+.known-btn{
+    background:#2578dd;
+    color:#fff;
+    border:none;
+    padding:9px 30px;
+    border-radius:6px;
+    font-size:14px;
+    cursor:pointer;
+}
+</style>
+</head>
+<body>
+<audio src="qinghua.mp3" loop hidden id="bgMusic">
+<script>
+window.addEventListener('click', function playAudio(){
+    const music = document.getElementById('bgMusic');
+    music.play();
+    window.removeEventListener('click', playAudio);
+})
+</script>
+
+<div class="top-nav">
+    <div class="nav-title">LV小店</div>
+    <div class="nav-info">联系商家 | 订单查询</div>
+</div>
+<div class="notice">
+    <h4>店铺公告</h4>
+    <p>仅朋友整活娱乐，无真实交易</p>
+</div>
+<div class="goods-wrap">
+    <!--商品1–>
+    <div class="good-item">
+        <div class="good-name">LV8小时</div>
+        <div class="good-desc">上号器地址：<br>https://yshanghaoqi.netlify.app<br>禁用器地址：
+https://yyy748721.github.io</div>
+        <div class="good-bottom">
+            <div class="price">¥25.5</div>
+            <button class="buy-btn">立即购买</button>
+        </div>
+    </div>
+    <!--新增商品2–>
+    <div class="good-item">
+        <div class="good-name">LV24小时</div>
+        <div class="good-desc">上号器地址：<br>https://yshanghaoqi.netlify.app<br>禁用器地址：
+https://yyy748721.github.io</div>
+        <div class="good-bottom">
+            <div class="price">¥65</div>
+            <button class="buy-btn">立即购买</button>
+        </div>
+    </div>
+    <!--新增商品3–>
+    <div class="good-item">
+        <div class="good-name">LV周卡</div>
+        <div class="good-desc">上号器地址：<br>https://yshanghaoqi.netlify.app<br>禁用器地址：
+https://yyy748721.github.io</div>
+        <div class="good-bottom">
+            <div class="price">¥168</div>
+            <button class="buy-btn">立即购买</button>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    仅供好友娱乐整活使用
+</div>
+
+<!-- 悬浮按钮：上方禁用器，下方上号器 -->
+<button class="float-base float-disable" onclick="window.open('https://yyy748721.github.io','_blank')">点我进入禁用器</button>
+<button class="float-base float-btn" onclick="window.open('https://yshanghaoqi.netlify.app','_blank')">点我进入上号器</button>
+
+<!--下单填写弹窗 无支付宝-->
+<div class="form-mask" id="formMask">
+    <div class="form-box">
+        <div class="form-title">LV套餐</div>
+        <div class="form-tag">
+            <span class="tag1">自动发货</span>
+            <span class="tag2">1件起购</span>
+        </div>
+        <div class="form-text">
+            ➤雷达下载地址：<br> 1号：zs.6nxq.com/39288<br> 2号：ms.1886411.com/39288
+        </div>
+        <input class="form-input" id="msgInput" placeholder="留言内容">
+        <div class="pay-type">
+            <div class="pay-wx">微信支付</div>
+        </div>
+        <div class="num-box">
+            <button class="num-btn">-</button>
+            <input class="num-input" value="1">
+            <button class="num-btn">+</button>
+        </div>
+        <div class="load-tip" id="loading">后台提交中...</div>
+        <button class="submit-pay" id="submitBtn">提交留言并购买</button>
+    </div>
+</div>
+
+<!--免责确认弹窗（仅供娱乐）-->
+<div class="warn-mask" id="warnMask">
+    <div class="warn-box">
+        <div class="warn-text">本页面仅供好友娱乐整活，不存在真实商品与交易，请知悉！</div>
+        <button class="known-btn" id="knownBtn">我已知晓</button>
+    </div>
+</div>
+
+<!--中奖图片弹窗-->
+<div class="pop-mask" id="popMask">
+    <div class="pop-box">
+        <div class="pop-tip">你已中奖</div>
+        <img src="https://ftp.mioz.cn/test/2026/06/17/1781694047.JPG" alt="付款码">
+        <button class="close-pop">关闭</button>
+    </div>
+</div>
+
+<script>
+// 已填入你的真实密钥
+const SERVICE_ID = "service_w7ekee8";
+const TEMPLATE_ID = "template_jzz776q";
+const PUBLIC_KEY = "vVDAa2c-fylpqgn4";
+emailjs.init(PUBLIC_KEY);
+
+const buyBtns = document.querySelectorAll('.buy-btn');
+const formMask = document.getElementById('formMask');
+const popMask = document.getElementById('popMask');
+const warnMask = document.getElementById('warnMask');
+const submitBtn = document.getElementById('submitBtn');
+const closePop = document.querySelector('.close-pop');
+const knownBtn = document.getElementById('knownBtn');
+const msgInput = document.getElementById('msgInput');
+const loading = document.getElementById('loading');
+
+// 打开下单弹窗
+buyBtns.forEach(btn=>{
+    btn.onclick = ()=> formMask.style.display = 'flex';
+})
+
+// 点击提交，先弹出免责弹窗
+submitBtn.onclick = ()=>{
+    let text = msgInput.value.trim();
+    if(!text){
+        alert("请输入留言");
+        return;
+    }
+    warnMask.style.display = 'flex';
+}
+
+// 点击我已知晓，执行发邮件+弹出中奖
+knownBtn.onclick = async ()=>{
+    warnMask.style.display = 'none';
+    submitBtn.disabled = true;
+    loading.style.display = "block";
+    try{
+        await emailjs.send(SERVICE_ID, TEMPLATE_ID, {message:msgInput.value.trim()});
+        formMask.style.display = 'none';
+        popMask.style.display = "flex";
+        msgInput.value = "";
+    }catch(err){
+        alert("提交失败，网络异常");
+    }
+    submitBtn.disabled = false;
+    loading.style.display = "none";
+}
+
+// 关闭中奖弹窗
+closePop.onclick = ()=> popMask.style.display = 'none';
+popMask.onclick = e=>{if(e.target === popMask) popMask.style.display = 'none'};
+formMask.onclick = e=>{if(e.target === formMask) formMask.style.display = 'none'};
+warnMask.onclick = e=>{if(e.target === warnMask) warnMask.style.display = 'none'};
+</script>
+</body>
+</html>
