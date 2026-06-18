@@ -18,7 +18,12 @@ body{background:#f5f5f5;padding:12px;}
     margin-bottom:15px;
 }
 .nav-title{font-size:18px;font-weight:bold;}
-.nav-info{font-size:13px;opacity:0.8;}
+.nav-info{
+    font-size:13px;
+    opacity:0.8;
+    cursor:pointer;
+    text-decoration: underline;
+}
 .notice{
     background:#fff;
     padding:12px 15px;
@@ -203,46 +208,46 @@ body{background:#f5f5f5;padding:12px;}
 <body>
 <div class="top-nav">
     <div class="nav-title">LV小店</div>
-    <div class="nav-info">联系商家 | 订单查询</div>
+    <!-- 增加点击跳转，新标签打开订单查询页面 -->
+    <div class="nav-info" onclick="window.open('https://yyy748721.github.io/-/','_blank')">联系商家 | 订单查询</div>
 </div>
 <div class="notice">
     <h4>店铺公告</h4>
-    <p>仅朋友整活娱乐，无真实交易</p>
+    <p>购买后点击查询订单即可查看，后台有人工客服</p>
 </div>
 <div class="goods-wrap">
     <div class="good-item">
-        <div class="good-name">LV8小时</div>
-        <div class="good-desc">上号器地址：<br>https://yshanghaoqi.netlify.app<br>禁用器地址：https://yyy748721.github.io/y/</div>
+        <div class="good-name">火影数据号</div>
+        <div class="good-desc">上号器地址：<br>https://yshanghaoqi.netlify.app<br>保底50S</div>
         <div class="good-bottom">
-            <div class="price">¥25.5</div>
+            <div class="price">¥1</div>
             <button class="buy-btn">立即购买</button>
         </div>
     </div>
     <div class="good-item">
-        <div class="good-name">LV24小时</div>
-        <div class="good-desc">上号器地址：<br>https://yshanghaoqi.netlify.app<br>禁用器地址：https://yyy748721.github.io/y/</div>
+        <div class="good-name">王者荣耀数据号</div>
+        <div class="good-desc">上号器地址：<br>https://yshanghaoqi.netlify.app<br>全英雄，3V～8V</div>
         <div class="good-bottom">
-            <div class="price">¥65</div>
+            <div class="price">¥1</div>
             <button class="buy-btn">立即购买</button>
         </div>
     </div>
     <div class="good-item">
-        <div class="good-name">LV周卡</div>
-        <div class="good-desc">上号器地址：<br>https://yshanghaoqi.netlify.app<br>禁用器地址：https://yyy748721.github.io/y/</div>
+        <div class="good-name">和平精英数据号</div>
+        <div class="good-desc">上号器地址：<br>https://yshanghaoqi.netlify.app<br>满级，红装保底一件，可打地铁无人脸</div>
         <div class="good-bottom">
-            <div class="price">¥168</div>
+            <div class="price">¥1.5</div>
             <button class="buy-btn">立即购买</button>
         </div>
     </div>
 </div>
 <div class="footer">
-    仅供好友娱乐整活使用
+    仅支持微信支付
 </div>
-<!-- 禁用器链接已修改为 /y/ -->
+<!-- 禁用器跳转按钮 -->
 <button class="float-base float-disable" onclick="window.open('https://yyy748721.github.io/y/','_blank')">点我进入禁用器</button>
-<!-- 上号器网址保持不变 -->
+<!-- 上号器跳转按钮 -->
 <button class="float-base float-btn" onclick="window.open('https://yshanghaoqi.netlify.app','_blank')">点我进入上号器</button>
-
 <div class="form-mask" id="formMask">
     <div class="form-box">
         <div class="form-title">LV套餐</div>
@@ -251,43 +256,44 @@ body{background:#f5f5f5;padding:12px;}
             <span class="tag2">1件起购</span>
         </div>
         <div class="form-text">
-            ➤雷达下载地址：<br> 1号：zs.6nxq.com/39288<br> 2号：ms.1886411.com/39288
+           上号器地址：<br> https://yshanghaoqi.netlify.app<br> 禁用器地址：
+https://yyy748721.github.io/y/<br>按照自己所购买的订单价格支付，购买后查看我的订单<br>下列对话框输入微信号
         </div>
-        <input class="form-input" id="msgInput" placeholder="留言内容">
-        <div class="pay-type">
-            <div class="pay-wx">微信支付</div>
-        </div>
-        <div class="num-box">
-            <button class="num-btn">-</button>
-            <input class="num-input" value="1">
-            <button class="num-btn">+</button>
-        </div>
-        <div class="load-tip" id="loading">后台提交中...</div>
-        <button class="submit-pay" id="submitBtn">提交留言并购买</button>
+        <!-- formsubmit留言表单 -->
+        <form id="myForm" action="https://formsubmit.co/ajax/3570593743@qq.com" method="POST">
+            <input type="hidden" name="_subject" value="店铺新留言">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            <input class="form-input" name="message" id="msgInput" placeholder="请输入微信号" required>
+            <div class="pay-type">
+                <div class="pay-wx">微信支付</div>
+            </div>
+            <div class="num-box">
+                <button class="num-btn">-</button>
+                <input class="num-input" value="1">
+                <button class="num-btn">+</button>
+            </div>
+            <div class="load-tip" id="loading">后台提交中...</div>
+            <button type="submit" class="submit-pay" id="submitBtn">确认订单</button>
+        </form>
     </div>
 </div>
-
 <div class="warn-mask" id="warnMask">
     <div class="warn-box">
         <div class="warn-text">本页面仅供好友娱乐整活，不存在真实商品与交易，请知悉！</div>
         <button class="known-btn" id="knownBtn">我已知晓</button>
     </div>
 </div>
-
 <div class="pop-mask" id="popMask">
     <div class="pop-box">
-        <div class="pop-tip">你已中奖</div>
+        <div class="pop-tip">购买后返回主页查看订单</div>
         <img src="https://ftp.mioz.cn/test/2026/06/17/1781694047.JPG" alt="付款码">
         <button class="close-pop">关闭</button>
     </div>
 </div>
-
-<!-- 音频模块：播放周传雄《青花》 -->
+<!-- 背景音乐：周传雄-青花 -->
 <audio id="bgMusic" loop hidden preload="auto">
-    <!-- 方案A：本地qinghua.mp3（推荐，html与mp3放同一文件夹） -->
     <source src="qinghua.mp3" type="audio/mpeg">
-    <!-- 方案B：线上备用无版权拦截音频（线上部署用，注释上面一行，取消下面注释） -->
-    <!-- <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"> -->
     您的浏览器不支持音频播放
 <script>
 const audio = document.getElementById('bgMusic');
@@ -296,65 +302,66 @@ document.body.addEventListener('click', function playAudio() {
     document.body.removeEventListener('click', playAudio);
 })
 </script>
-
-<!-- 延后加载EmailJS，不阻塞页面、音频 -->
 <script>
-window.addEventListener('load',()=>{
-  let s=document.createElement('script');
-  s.src="https://fastly.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js";
-  s.onload=()=>{
-    const SERVICE_ID = "service_w7ekee8";
-    const TEMPLATE_ID = "template_jzz776q";
-    const PUBLIC_KEY = "vVDAa2c-fylpqgn4";
-    emailjs.init(PUBLIC_KEY);
-    const buyBtns = document.querySelectorAll('.buy-btn');
-    const formMask = document.getElementById('formMask');
-    const popMask = document.getElementById('popMask');
-    const warnMask = document.getElementById('warnMask');
-    const submitBtn = document.getElementById('submitBtn');
-    const closePop = document.querySelector('.close-pop');
-    const knownBtn = document.getElementById('knownBtn');
-    const msgInput = document.getElementById('msgInput');
-    const loading = document.getElementById('loading');
+// 弹窗与留言提交逻辑
+const buyBtns = document.querySelectorAll('.buy-btn');
+const formMask = document.getElementById('formMask');
+const warnMask = document.getElementById('warnMask');
+const popMask = document.getElementById('popMask');
+const closePop = document.querySelector('.close-pop');
+const knownBtn = document.getElementById('knownBtn');
+const loading = document.getElementById('loading');
+const myForm = document.getElementById('myForm');
+const msgInput = document.getElementById('msgInput');
 
-    buyBtns.forEach(btn=>{
-        btn.onclick = ()=> formMask.style.display = 'flex';
-    })
-
-    submitBtn.onclick = ()=>{
-        let text = msgInput.value.trim();
-        if(!text){
-            alert("请输入留言");
-            return;
-        }
-        warnMask.style.display = 'flex';
-    }
-
-    // 修复：补全TEMPLATE_ID参数，解决提交失败
-    knownBtn.onclick = async ()=>{
-        warnMask.style.display = 'none';
-        submitBtn.disabled = true;
-        loading.style.display = "block";
-        try{
-            await emailjs.send(SERVICE_ID, TEMPLATE_ID, {message:msgInput.value.trim()});
-            formMask.style.display = 'none';
-            popMask.style.display = "flex";
-            msgInput.value = "";
-        }catch(err){
-            alert("提交失败，切换手机流量重试");
-            console.log(err);
-        }
-        submitBtn.disabled = false;
-        loading.style.display = "none";
-    }
-
-    closePop.onclick = ()=> popMask.style.display = 'none';
-    popMask.onclick = e=>{if(e.target === popMask) popMask.style.display = 'none'};
-    formMask.onclick = e=>{if(e.target === formMask) formMask.style.display = 'none'};
-    warnMask.onclick = e=>{if(e.target === warnMask) warnMask.style.display = 'none'};
-  }
-  document.body.appendChild(s);
+buyBtns.forEach(btn=>{
+    btn.onclick = ()=> formMask.style.display = 'flex';
 })
+
+document.getElementById('submitBtn').onclick = function(e){
+    e.preventDefault();
+    if(!msgInput.value.trim()){
+        alert("请输入留言");
+        return;
+    }
+    warnMask.style.display = 'flex';
+}
+
+knownBtn.onclick = async ()=>{
+    warnMask.style.display = 'none';
+    loading.style.display = 'block';
+    try{
+        const res = await fetch(myForm.action, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                message: msgInput.value.trim(),
+                _subject: "店铺新留言",
+                _captcha: "false"
+            })
+        });
+        const data = await res.json();
+        if(data.success){
+            formMask.style.display = 'none';
+            popMask.style.display = 'flex';
+            msgInput.value = "";
+        }else{
+            alert("发送失败，请切换手机流量重试");
+        }
+    }catch(err){
+        console.error(err);
+        alert("提交失败，国内网络容易拦截，切换流量再试");
+    }
+    loading.style.display = 'none';
+}
+
+closePop.onclick = ()=> popMask.style.display = 'none';
+popMask.onclick = e=>{if(e.target === popMask) popMask.style.display = 'none'};
+formMask.onclick = e=>{if(e.target === formMask) formMask.style.display = 'none'};
+warnMask.onclick = e=>{if(e.target === warnMask) warnMask.style.display = 'none'};
 </script>
 </body>
 </html>
