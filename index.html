@@ -59,29 +59,34 @@ body{background:#f5f5f5;padding:12px;}
 }
 .footer{
     text-align:center;
-    margin-top:30px;
+    margin-top:20px;
     font-size:12px;
     color:#888;
 }
+/* 按钮组：商品下方居中纵向排列 */
+.btn-group{
+    margin: 20px 0;
+}
 .float-base{
-    position:fixed;
-    left:15px;
+    display: block;
+    width: 70%;
+    margin: 12px auto;
     color:#fff;
     border:none;
     padding:12px 16px;
     border-radius:30px;
     font-size:14px;
-    z-index:9999;
     cursor:pointer;
     box-shadow:0 2px 8px rgba(0,0,0,0.2);
 }
 .float-disable{
     background:#ff4444;
-    bottom:80px;
+}
+.float-order{
+    background:#2b7cff;
 }
 .float-btn{
     background:#00bb22;
-    bottom:30px;
 }
 .form-mask{
     position:fixed;
@@ -108,13 +113,13 @@ body{background:#f5f5f5;padding:12px;}
     border:1px solid #ddd;
     padding:13px;
     border-radius:8px;
-    margin:15px 0;
+    margin:10px 0;
     font-size:15px;
 }
 .pay-type{margin:15px 0;}
 .pay-wx{border:2px solid #2578dd;padding:10px 20px;border-radius:8px;text-align:center}
 .num-box{display:flex;align-items:center;gap:12px;margin:20px 0}
-.num-btn{width:35px;height:35px;border:1px solid #ddd;border-radius:6px;font-size:18px}
+.num-btn{width:35px;height:35px;border:1px solid #ddd;border-radius:6px;font-size:18px;cursor:pointer;}
 .num-input{width:50px;text-align:center;border:1px solid #ddd;padding:6px}
 .submit-pay{
     width:100%;
@@ -203,27 +208,68 @@ body{background:#f5f5f5;padding:12px;}
     font-size:14px;
     cursor:pointer;
 }
+.msg-mask{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.7);
+    display:none;
+    z-index:1001;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+.msg-box{
+    background:#fff;
+    padding:25px 20px;
+    border-radius:10px;
+    text-align:center;
+    max-width:300px;
+    width:100%;
+}
+.msg-title{
+    font-size:18px;
+    font-weight:bold;
+    color:#2578dd;
+    margin-bottom:10px;
+}
+.msg-text{
+    font-size:14px;
+    color:#666;
+    line-height:1.6;
+    margin-bottom:20px;
+}
+.msg-close{
+    background:#2578dd;
+    color:#fff;
+    border:none;
+    padding:8px 30px;
+    border-radius:6px;
+    font-size:14px;
+    cursor:pointer;
+}
 </style>
 </head>
 <body>
-<!-- 已补上  闭合标签，修复白屏问题 -->
+<!-- 背景音乐：结构完整，循环播放 -->
 <audio id="bgMusic" loop hidden preload="auto">
-    <source src="qinghua.mp3" type="audio/mpeg">
+    <source src="wurenzhidao.mp3" type="audio/mpeg">
     您的浏览器不支持音频播放
 </audio>
+
 <div class="top-nav">
     <div class="nav-title">LV小店</div>
-    <!-- 增加点击跳转，新标签打开订单查询页面 -->
     <div class="nav-info" onclick="window.open('https://yyy748721.github.io/-/','_blank')">联系商家 | 订单查询</div>
 </div>
+
 <div class="notice">
     <h4>店铺公告</h4>
-    <p>购买后点击查询订单即可查看，后台有人工客服</p>
+    <p>购买请先去下面生产唯一订单号并在支付时填入对应位置，购买后点击查询订单即可查看，后台有人工客服</p>
 </div>
+
 <div class="goods-wrap">
     <div class="good-item">
         <div class="good-name">火影数据号</div>
-        <div class="good-desc">上号器地址：<br>https://yshanghaoqi.netlify.app<br>保底30S</div>
+        <div class="good-desc">上号器地址：<br>https://yyy748721.github.io/shanghaoqi/<br>保底30S</div>
         <div class="good-bottom">
             <div class="price">¥1</div>
             <button class="buy-btn">立即购买</button>
@@ -231,7 +277,7 @@ body{background:#f5f5f5;padding:12px;}
     </div>
     <div class="good-item">
         <div class="good-name">王者荣耀数据号</div>
-        <div class="good-desc">上号器地址：<br>https://yshanghaoqi.netlify.app<br>全英雄，3V～8V</div>
+        <div class="good-desc">上号器地址：<br>https://yyy748721.github.io/shanghaoqi/<br>全英雄，3V～8V</div>
         <div class="good-bottom">
             <div class="price">¥1.1</div>
             <button class="buy-btn">立即购买</button>
@@ -239,20 +285,26 @@ body{background:#f5f5f5;padding:12px;}
     </div>
     <div class="good-item">
         <div class="good-name">和平精英数据号</div>
-        <div class="good-desc">上号器地址：<br>https://yshanghaoqi.netlify.app<br>满级，红装保底一件，可打地铁无人脸</div>
+        <div class="good-desc">上号器地址：<br>https://yyy748721.github.io/shanghaoqi/<br>满级，红装保底一件，可打地铁无人脸</div>
         <div class="good-bottom">
             <div class="price">¥1.5</div>
             <button class="buy-btn">立即购买</button>
         </div>
     </div>
 </div>
+
+<!-- 三个功能按钮：商品最下方、footer上方 -->
+<div class="btn-group" id="btnGroup">
+    <button class="float-base float-disable" onclick="window.open('https://yyy748721.github.io/y/','_blank')">点我进入禁用器</button>
+    <button class="float-base float-order" onclick="window.open('https://yyy748721.github.io/dingdanhao/','_blank')">点我进入生成订单号</button>
+    <button class="float-base float-btn" onclick="window.open('https://yyy748721.github.io/shanghaoqi/','_blank')">点我进入上号器</button>
+</div>
+
 <div class="footer">
     仅支持微信支付
 </div>
-<!-- 禁用器跳转按钮 -->
-<button class="float-base float-disable" onclick="window.open('https://yyy748721.github.io/y/','_blank')">点我进入禁用器</button>
-<!-- 上号器跳转按钮 -->
-<button class="float-base float-btn" onclick="window.open('https://yshanghaoqi.netlify.app','_blank')">点我进入上号器</button>
+
+<!-- 购买二级弹窗 -->
 <div class="form-mask" id="formMask">
     <div class="form-box">
         <div class="form-title">LV套餐</div>
@@ -261,53 +313,65 @@ body{background:#f5f5f5;padding:12px;}
             <span class="tag2">1件起购</span>
         </div>
         <div class="form-text">
-           上号器地址：<br> https://yshanghaoqi.netlify.app<br> 禁用器地址：
-https://yyy748721.github.io/y/<br>按照自己所购买的订单价格支付，购买后查看我的订单<br>下列对话框输入VX号或QQ号
+           上号器地址：<br> https://yyy748721.github.io/shanghaoqi/<br> 禁用器地址：
+https://yyy748721.github.io/y/<br>按照自己所购买的订单价格支付，购买后查看我的订单，注：填写订单号
         </div>
-        <!-- formsubmit留言表单 -->
         <form id="myForm" action="https://formsubmit.co/ajax/3570593743@qq.com" method="POST">
             <input type="hidden" name="_subject" value="店铺新留言">
             <input type="hidden" name="_captcha" value="false">
             <input type="hidden" name="_template" value="table">
-            <input class="form-input" name="message" id="msgInput" placeholder="请输入VX号或QQ号" required>
+            <input class="form-input" name="orderid" id="orderInput" placeholder="请输入订单号">
+            <input class="form-input" name="contact" id="msgInput" placeholder="请输入VX号或QQ号" required>
             <div class="pay-type">
                 <div class="pay-wx">微信支付</div>
             </div>
             <div class="num-box">
-                <button class="num-btn">-</button>
-                <input class="num-input" value="1">
-                <button class="num-btn">+</button>
+                <button type="button" class="num-btn" id="numMinus">-</button>
+                <input class="num-input" id="numInput" value="1" readonly>
+                <button type="button" class="num-btn" id="numPlus">+</button>
             </div>
             <div class="load-tip" id="loading">后台提交中...</div>
             <button type="submit" class="submit-pay" id="submitBtn">确认订单</button>
         </form>
     </div>
 </div>
+
 <div class="warn-mask" id="warnMask">
     <div class="warn-box">
         <div class="warn-text">本页面仅供好友娱乐整活，不存在真实商品与交易，购买后返回主页查看订单</div>
         <button class="known-btn" id="knownBtn">我已知晓</button>
     </div>
 </div>
+
 <div class="pop-mask" id="popMask">
     <div class="pop-box">
-        <div class="pop-tip">购买后返回主页查看订单</div>
+        <div class="pop-tip">长按保存图片前往微信支付，购买后返回主页查看订单</div>
         <img src="https://i.ibb.co/zTTryHtR/image.jpg" alt="付款码">
         <button class="close-pop">关闭</button>
     </div>
 </div>
 
+<div class="msg-mask" id="msgMask">
+    <div class="msg-box">
+        <div class="msg-title">订单提交成功</div>
+        <div class="msg-text">订单号+联系方式已发送，客服会尽快与您联系。</div>
+        <button class="msg-close" id="msgClose">我知道了</button>
+    </div>
+</div>
+
 <script>
+// 背景音乐：点击页面触发播放，符合浏览器自动播放策略
 const audio = document.getElementById('bgMusic');
 document.body.addEventListener('click', function playAudio() {
-    audio.play().catch(e=>console.log("需要点击页面触发播放"));
+    audio.play().catch(e=>console.log("音频播放需用户点击触发"));
     document.body.removeEventListener('click', playAudio);
 })
 </script>
+
 <script>
-// 弹窗与留言提交逻辑
 const buyBtns = document.querySelectorAll('.buy-btn');
 const formMask = document.getElementById('formMask');
+const btnGroup = document.getElementById('btnGroup');
 const warnMask = document.getElementById('warnMask');
 const popMask = document.getElementById('popMask');
 const closePop = document.querySelector('.close-pop');
@@ -315,9 +379,28 @@ const knownBtn = document.getElementById('knownBtn');
 const loading = document.getElementById('loading');
 const myForm = document.getElementById('myForm');
 const msgInput = document.getElementById('msgInput');
+const orderInput = document.getElementById('orderInput');
+const msgMask = document.getElementById('msgMask');
+const msgClose = document.getElementById('msgClose');
 
+const numMinus = document.getElementById('numMinus');
+const numPlus = document.getElementById('numPlus');
+const numInput = document.getElementById('numInput');
+numMinus.onclick = ()=>{
+    let num = parseInt(numInput.value);
+    if(num > 1) numInput.value = num - 1;
+}
+numPlus.onclick = ()=>{
+    let num = parseInt(numInput.value);
+    numInput.value = num + 1;
+}
+
+// 打开弹窗：隐藏按钮组
 buyBtns.forEach(btn=>{
-    btn.onclick = ()=> formMask.style.display = 'flex';
+    btn.onclick = ()=> {
+        formMask.style.display = 'flex';
+        btnGroup.style.display = 'none';
+    }
 })
 
 document.getElementById('submitBtn').onclick = function(e){
@@ -333,23 +416,20 @@ knownBtn.onclick = async ()=>{
     warnMask.style.display = 'none';
     loading.style.display = 'block';
     try{
+        const formData = new FormData(myForm);
         const res = await fetch(myForm.action, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                message: msgInput.value.trim(),
-                _subject: "店铺新留言",
-                _captcha: "false"
-            })
+            body: formData
         });
         const data = await res.json();
         if(data.success){
             formMask.style.display = 'none';
+            btnGroup.style.display = 'block'; // 提交成功恢复按钮显示
             popMask.style.display = 'flex';
+            msgMask.style.display = 'flex';
             msgInput.value = "";
+            orderInput.value = "";
+            numInput.value = 1;
         }else{
             alert("发送失败，请切换手机流量重试");
         }
@@ -361,9 +441,18 @@ knownBtn.onclick = async ()=>{
 }
 
 closePop.onclick = ()=> popMask.style.display = 'none';
+msgClose.onclick = ()=> msgMask.style.display = 'none';
+
 popMask.onclick = e=>{if(e.target === popMask) popMask.style.display = 'none'};
-formMask.onclick = e=>{if(e.target === formMask) formMask.style.display = 'none'};
+// 点击遮罩关闭弹窗：恢复按钮显示
+formMask.onclick = e=>{
+    if(e.target === formMask) {
+        formMask.style.display = 'none';
+        btnGroup.style.display = 'block';
+    }
+};
 warnMask.onclick = e=>{if(e.target === warnMask) warnMask.style.display = 'none'};
+msgMask.onclick = e=>{if(e.target === msgMask) msgMask.style.display = 'none'};
 </script>
 </body>
 </html>
